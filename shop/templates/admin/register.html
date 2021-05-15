@@ -3,6 +3,7 @@
 {% block content %}
 <div class="text-center h1">Register</div>
 <div class="containter">
+  {% include '_messages.html'%}
     {% from "_formhelpers.html" import render_field %}
     <form method="post" enctype="multipart/form-data">
       <dl>
