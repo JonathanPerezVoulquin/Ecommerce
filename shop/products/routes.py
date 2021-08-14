@@ -1,7 +1,7 @@
 from flask import redirect, render_template, url_for, request, flash, session
 from shop import db, app
 from .models import Brand, Category
-
+from .forms import Addproducts
 import secrets
 
 
@@ -66,3 +66,8 @@ def updatecat():
         db.session.commit()
         return redirect(url_for('category'))
     return render_template('products/addbrand.html', title='Update Category Page', updatecat=updatecat)
+
+@app.route('/addproduct', methods=['GET','POST'])
+def addproduct():
+    form = Addproducts(request.form)
+    return render_template('products/addproduct.html', title='Add Product Page', form=form)
