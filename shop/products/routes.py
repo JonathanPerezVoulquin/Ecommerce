@@ -2,7 +2,6 @@ from flask import redirect, render_template, url_for, request, flash, session
 from shop import db, app
 from .models import Brand, Category
 from .forms import Addproducts
-import secrets
 
 
 @app.route('/')
@@ -53,6 +52,7 @@ def addcat():
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html')
 
+
 @app.route('/updatecat/<int:id>', methods=['GET', 'POST'])
 def updatecat():
     if 'email' not in session:
@@ -67,7 +67,11 @@ def updatecat():
         return redirect(url_for('category'))
     return render_template('products/addbrand.html', title='Update Category Page', updatecat=updatecat)
 
-@app.route('/addproduct', methods=['GET','POST'])
+
+@app.route('/addproduct', methods=['GET', 'POST'])
 def addproduct():
+    brands = Brand.query.all()
+    categories = Category.query.all()
     form = Addproducts(request.form)
-    return render_template('products/addproduct.html', title='Add Product Page', form=form)
+    return render_template('products/addproduct.html', title='Add Product Page',form=form, brands=brands,
+                           categories=categories)
