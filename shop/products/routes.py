@@ -79,7 +79,7 @@ def addproduct():
         price = form.price.data
         discount = form.discount.data
         stock = form.stock.data
-        colors = form.color.data
+        colors = form.colors.data
         desc = form.discription.data
         brand = request.form.get('brand')
         category = request.form.get('category')
