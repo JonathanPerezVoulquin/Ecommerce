@@ -71,6 +71,9 @@ def updatecat():
 
 @app.route('/addproduct', methods=['GET', 'POST'])
 def addproduct():
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
     brands = Brand.query.all()
     categories = Category.query.all()
     form = Addproducts(request.form)
@@ -91,7 +94,7 @@ def addproduct():
                              brand_id = brand, category_id = category,
                              image_1 = image_1, image_2 = image_2, image_3 = image_3)
         db.session.add(addpro)
-        flash(f'The product{name} has breen added to your database','success')
+        flash(f'The product {name} has breen added to your database','success')
         return redirect(url_for('admin'))
         db.session.commit()
 

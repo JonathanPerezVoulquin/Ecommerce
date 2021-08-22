@@ -1,6 +1,44 @@
 {% extends 'layout.html'%}
 {% block content%}
 
-{% include '_messages.html'%}
+<nav class="navbar navbar-dark bg-dark">
 
+  <div class="container-fluid">
+        <form class="container-fluid d-flex flex-row">
+            <a class="navbar-brand" href="#">Tienda Online</a>
+            <button class="btn btn-outline-info me-2" type="button">Home</button>
+            <button class="btn btn-outline-success me-2" type="button">Admin</button>
+         </form>
+
+  </div>
+</nav>
+<div class="container">
+    {% include '_messages.html'%}
+    <table class="table table-sm table-condense table-striped">
+        <thead>
+            <th>Stock</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Brand</th>
+            <th>Image</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+            {% for p in products %}
+        <tbody>
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.discount }}</td>
+                    <td>{{ product.brand.name}}</td>
+                    <td><img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="50" height="20"></td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
