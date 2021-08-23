@@ -94,9 +94,10 @@ def addproduct():
                              brand_id = brand, category_id = category,
                              image_1 = image_1, image_2 = image_2, image_3 = image_3)
         db.session.add(addpro)
+        db.session.commit()
         flash(f'The product {name} has breen added to your database','success')
         return redirect(url_for('admin'))
-        db.session.commit()
+
 
     return render_template('products/addproduct.html', title='Add Product Page',form=form, brands=brands,
                            categories=categories)
