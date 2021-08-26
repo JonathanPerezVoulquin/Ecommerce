@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, flash, session
 from shop import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
-from shop.products.models import Addproduct
+from shop.products.models import Addproduct, Brand, Category
 
 
 @app.route('/admin')
@@ -13,6 +13,23 @@ def admin():
     products = Addproduct.query.all()
     return render_template('admin/index.html', title='Admin Page', products=products)
 
+
+@app.route('/brands')
+def brands():
+    if 'email' not in session:
+        flash('Please login first', 'danger')
+        return redirect(url_for('login'))
+    brands = Brand.query.order_by(Brand.id.desc()).all()
+    return render_template('admin/brand.html', title ='Brand page', brands=brands)
+
+
+@app.route('/category')
+def category():
+    if 'email' not in  session:
+        flash('Please login first', 'danger')
+        return redirect(url_for('login'))
+    categories = Category.query.order_by(Category.id.desc()).all()
+    return render_template('admin/brand.html', title='Category page', categories=categories)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -31,6 +48,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
+    form2 = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -46,5 +64,5 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('email')
-    flash('Your session ended','success')
+    flash('Your session ended', 'success')
     return redirect('login')

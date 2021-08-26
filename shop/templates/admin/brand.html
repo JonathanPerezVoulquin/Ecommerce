@@ -16,16 +16,16 @@
                   <a class="nav-link" href="{{url_for('brands')}}">Marcas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('category')}}">Categorias</a>
+                  <a class="nav-link" href="{{url_for('category')}}">Categoria</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Agregar productos
+                    Add products
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{url_for('addproduct')}}">Agregar productos</a>
-                    <a class="dropdown-item" href="{{url_for('addbrand')}}">Agregar marcas</a>
-                    <a class="dropdown-item" href="{{url_for('addcat')}}">Agregar categorias</a>
+                    <a class="dropdown-item" href="{{url_for('addproduct')}}">Add product</a>
+                    <a class="dropdown-item" href="{{url_for('addbrand')}}">Add brand</a>
+                    <a class="dropdown-item" href="{{url_for('addcat')}}">Add category</a>
                   </div>
                 </li>
               </ul>
@@ -43,27 +43,34 @@
     <table class="table table-sm table-striped table-condensed  table-hover">
         <thead>
             <th>Sr</th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Discount</th>
-            <th>Brand</th>
-            <th>Image</th>
+            <th>Name</th>
             <th>Edit</th>
             <th>Delete</th>
         </thead>
-            {% for product in products %}
-        <tbody>
+         <tbody>
+            {% if brands %}
+            {% for brand in brands %}
+
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.discount }}</td>
-                    <td>{{ product.brand.name}}</td>
-                    <td><img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="50" height="20"></td>
+                    <td>{{ brand.name }}</td>
                     <td><a class="btn btn-info">Edit</a></td>
                     <td><a class="btn btn-danger">Delete</a></td>
                 </tr>
             {% endfor %}
+
+            {% else %}
+
+            {% for category in categories %}
+
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ category.name }}</td>
+                    <td><a class="btn btn-info">Edit</a></td>
+                    <td><a class="btn btn-danger">Delete</a></td>
+                </tr>
+            {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </div>
