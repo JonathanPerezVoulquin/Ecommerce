@@ -20,12 +20,12 @@
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add products
+                    Agregar productos
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{url_for('addproduct')}}">Add product</a>
-                    <a class="dropdown-item" href="{{url_for('addbrand')}}">Add brand</a>
-                    <a class="dropdown-item" href="{{url_for('addcat')}}">Add category</a>
+                    <a class="dropdown-item" href="{{url_for('addproduct')}}">Agregar producto</a>
+                    <a class="dropdown-item" href="{{url_for('addbrand')}}">Agregar marca</a>
+                    <a class="dropdown-item" href="{{url_for('addcat')}}">Agregar categorías</a>
                   </div>
                 </li>
               </ul>
@@ -40,22 +40,22 @@
 
 <div class="container">
     {% include '_messages.html'%}
-    <table class="table table-sm table-striped table-condensed  table-hover">
+    <table class="table table-sm table-striped table-condensed  table-hover  table-dark">
         <thead>
             <th>Sr</th>
             <th>Name</th>
             <th>Edit</th>
             <th>Delete</th>
         </thead>
-         <tbody>
+        <tbody>
             {% if brands %}
             {% for brand in brands %}
 
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ brand.name }}</td>
-                    <td><a class="btn btn-info">Edit</a></td>
-                    <td><a class="btn btn-danger">Delete</a></td>
+                    <td><a href="{{url_for('updatebrand', id=brand.id)}}" class="btn btn-info">Edit</a></td>
+                    <td><a href="" class="btn btn-danger">Delete</a></td>
                 </tr>
             {% endfor %}
 
@@ -66,8 +66,8 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ category.name }}</td>
-                    <td><a class="btn btn-info">Edit</a></td>
-                    <td><a class="btn btn-danger">Delete</a></td>
+                    <td><a href="{{url_for('updatecat', id=category.id)}}" class="btn btn-info">Edit</a></td>
+                    <td><a href="" class="btn btn-danger">Delete</a></td>
                 </tr>
             {% endfor %}
             {% endif %}

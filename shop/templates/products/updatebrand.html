@@ -1,0 +1,27 @@
+{% extends 'layout.html'%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% include '_messages.html'%}
+            {% if updatebrand %}
+            <h2 class="text-center mt-5"> Agregar marca </h2>
+            <form action="" method="POST">
+                <input type="text" name="brand" class="form-control" value="{{updatebrand.name}}">
+                <input class="btn btn-info mt-2" type="submit" value="Update brand">
+            </form>
+            <a href="{{url_for('brands')}}" class="btn btn-warning" style="margin-top: -66px; margin-left:125px;"> Cancelar </a>
+            {% else %}
+            <h2 class="text-center mt-5"> Agregar categoría </h2>
+            <form action="" method="POST">
+                <input type="text" name="category" class="form-control" value="{{updatecat.name}}">
+                <input type="submit" value="Update category" class="btn btn-info mt-2">
+            </form>
+            <a href="{{url_for('category')}}" class="btn btn-warning" style="margin-top:-66px; margin-left:105px;"> Cancelar </a>
+            {% endif %}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock %}

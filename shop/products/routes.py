@@ -36,7 +36,7 @@ def updatebrand(id):
         flash(f'Your brand has been updated', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html', title='Update brand Page', updatebrand=updatebrand)
+    return render_template('products/updatebrand.html', title='Update brand Page', updatebrand=updatebrand)
 
 
 @app.route('/addcat', methods=['GET', 'POST'])
@@ -55,7 +55,7 @@ def addcat():
 
 
 @app.route('/updatecat/<int:id>', methods=['GET', 'POST'])
-def updatecat():
+def updatecat(id):
     if 'email' not in session:
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
@@ -86,18 +86,17 @@ def addproduct():
         desc = form.discription.data
         brand = request.form.get('brand')
         category = request.form.get('category')
-        image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) +'.')
-        image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) +'.')
-        image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) +'.')
-        addpro = Addproduct(name=name,price=price, discount=discount,stock=stock,
-                             colors=colors,desc=desc,
-                             brand_id = brand, category_id = category,
-                             image_1 = image_1, image_2 = image_2, image_3 = image_3)
+        image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + '.')
+        image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) + '.')
+        image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + '.')
+        addpro = Addproduct(name=name, price=price, discount=discount, stock=stock,
+                            colors=colors, desc=desc,
+                            brand_id=brand, category_id=category,
+                            image_1=image_1, image_2=image_2, image_3=image_3)
         db.session.add(addpro)
         db.session.commit()
-        flash(f'The product {name} has breen added to your database','success')
+        flash(f'The product {name} has breen added to your database', 'success')
         return redirect(url_for('admin'))
 
-
-    return render_template('products/addproduct.html', title='Add Product Page',form=form, brands=brands,
+    return render_template('products/addproduct.html', title='Add Product Page', form=form, brands=brands,
                            categories=categories)
