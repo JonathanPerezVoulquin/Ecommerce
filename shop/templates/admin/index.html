@@ -46,6 +46,7 @@
             <th>Product</th>
             <th>Price</th>
             <th>Discount</th>
+            <th>Stock</th>
             <th>Brand</th>
             <th>Image</th>
             <th>Edit</th>
@@ -58,10 +59,11 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.discount }}</td>
+                    <td>{{ product.stock }}</td>
                     <td>{{ product.brand.name}}</td>
                     <td><img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="50" height="20"></td>
-                    <td><a class="btn btn-info">Edit</a></td>
-                    <td><a class="btn btn-danger">Delete</a></td>
+                    <td><a href="{{url_for('updateproduct', id=product.id)}}" class="btn btn-info">Edit</a></td>
+                    <td><a href="{{url_for('updateproduct', id=product.id)}}" class="btn btn-danger">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>
