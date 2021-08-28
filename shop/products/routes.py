@@ -1,8 +1,9 @@
-from flask import redirect, render_template, url_for, request, flash, session
+from flask import redirect, render_template, url_for, request, flash, session, current_app
 from shop import db, app, photos
 from .models import Brand, Category, Addproduct
 from .forms import Addproducts
 import secrets
+import os
 
 
 @app.route('/')
@@ -110,7 +111,7 @@ def updateproduct(id):
     brand = request.form.get('brand')
     category = request.form.get('category')
     form = Addproducts(request.form)
-    if request.method =='POST':
+    if request.method == 'POST':
         product.name = form.name.data
         product.price = form.price.data
         product.discount = form.discount.data
@@ -118,6 +119,27 @@ def updateproduct(id):
         product.category_id = category
         product.color = form.colors.data
         product.desc = form.discription.data
+        if request.files.get('image_1'):        #To update and delete photos, using library os ,do it with the 'try' and 'except' #repeat 3 times
+            try:
+                os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_1))  #if we do not put "/" at the end it does not delete the photo to edit'static/images/'
+                product.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + '.')
+            except:
+                product.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + '.')
+
+        if request.files.get('image_2'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_2))
+                product.image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) + '.')
+            except:
+                product.image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) + '.')
+
+        if request.files.get('image_3'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_3))
+                product.image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + '.')
+            except:
+                product.image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + '.')
+
         db.session.commit()
         flash('You product has been updated', 'success')
         return redirect(url_for('admin'))
@@ -128,5 +150,5 @@ def updateproduct(id):
     form.stock.data = product.stock
     form.discription.data = product.desc
 
-
-    return render_template('products/updateproduct.html', form=form, product=product, categories=categories, brands=brands)
+    return render_template('products/updateproduct.html', form=form, product=product, categories=categories,
+                           brands=brands)

@@ -43,6 +43,7 @@
             <div class="col-md-8">
                 <h2 class="text-center bg-info p-2"> Agregar Producto</h2>
                 {% from '_formhelpers.html' import render_field %}
+
                 <form action="" method="POST" enctype="multipart/form-data">
 
                     {{ render_field(form.name, class="form-control", placeholder="Add product name")}}
@@ -72,9 +73,9 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-4"><input type="file" name="image_1" class="form-control"></div>
-                            <div class="col-md-4"><input type="file" name="image_2" class="form-control"></div>
-                            <div class="col-md-4"><input type="file" name="image_3" class="form-control"></div>
+                             <div class="col-md-4">{{ render_field(form.image_1, class="form-control")}}</div>
+                            <div class="col-md-4">{{ render_field(form.image_2, class="form-control")}}</div>
+                            <div class="col-md-4">{{ render_field(form.image_3, class="form-control")}}</div>
                         </div>
                     </div>
 
