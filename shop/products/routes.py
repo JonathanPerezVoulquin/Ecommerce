@@ -11,6 +11,7 @@ def home():
     return ""
 
 
+# BRAND
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():
     if 'email' not in session:
@@ -40,6 +41,22 @@ def updatebrand(id):
     return render_template('products/updatebrand.html', title='Update brand Page', updatebrand=updatebrand)
 
 
+@app.route('/deletebrand/<int:id>', methods=['POST'])
+def deletebrand(id):
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    brand = Brand.query.get_or_404(id)
+    if request.method == "POST":
+        db.session.delete(brand)
+        db.session.commit()
+        flash(f"The brand {brand.name} was deleted from your database", "success")
+        return redirect(url_for('admin'))
+    flash(f"The brand {brand.name} can't be  deleted from your database", "warning")
+    return redirect(url_for('admin'))
+
+
+# CATEGORY
 @app.route('/addcat', methods=['GET', 'POST'])
 def addcat():
     if 'email' not in session:
@@ -70,6 +87,22 @@ def updatecat(id):
     return render_template('products/addbrand.html', title='Update Category Page', updatecat=updatecat)
 
 
+@app.route('/deletecat/<int:id>', methods=['POST'])
+def deletecat(id):
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    category = Category.query.get_or_404(id)
+    if request.method == "POST":
+        db.session.delete(category)
+        db.session.commit()
+        flash(f"The brand {category.name} was deleted from your database", "success")
+        return redirect(url_for('admin'))
+    flash(f"The brand {category.name} can't be  deleted from your database", "warning")
+    return redirect(url_for('admin'))
+
+
+# PRODUCTS
 @app.route('/addproduct', methods=['GET', 'POST'])
 def addproduct():
     if 'email' not in session:
@@ -119,9 +152,11 @@ def updateproduct(id):
         product.category_id = category
         product.color = form.colors.data
         product.desc = form.discription.data
-        if request.files.get('image_1'):        #To update and delete photos, using library os ,do it with the 'try' and 'except' #repeat 3 times
+        if request.files.get(
+                'image_1'):  #To update and delete photos, using library os ,do it with the 'try' and 'except'
             try:
-                os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_1))  #if we do not put "/" at the end it does not delete the photo to edit'static/images/'
+                os.unlink(os.path.join(current_app.root_path,
+                                       'static/images/' + product.image_1))  # if we do not put "/" at the end it does not delete the photo to edit'static/images/'
                 product.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + '.')
             except:
                 product.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + '.')
