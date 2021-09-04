@@ -8,7 +8,7 @@ import os
 
 @app.route('/')
 def home():
-    return ""
+    return "Items"
 
 
 # BRAND
@@ -153,7 +153,7 @@ def updateproduct(id):
         product.color = form.colors.data
         product.desc = form.discription.data
         if request.files.get(
-                'image_1'):  #To update and delete photos, using library os ,do it with the 'try' and 'except'
+                'image_1'):  # To update and delete photos, using library os ,do it with the 'try' and 'except'
             try:
                 os.unlink(os.path.join(current_app.root_path,
                                        'static/images/' + product.image_1))  # if we do not put "/" at the end it does not delete the photo to edit'static/images/'
@@ -184,6 +184,26 @@ def updateproduct(id):
     form.discription.data = product.discount
     form.stock.data = product.stock
     form.discription.data = product.desc
-
     return render_template('products/updateproduct.html', form=form, product=product, categories=categories,
                            brands=brands)
+
+
+@app.route('/deleteproduct/<int:id>', methods=['POST'])
+def deleteproduct(id):
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    product = Addproduct.query.get_or_404(id)
+    if request.method == 'POST':
+        try:
+            os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_1))
+            os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_2))
+            os.unlink(os.path.join(current_app.root_path, 'static/images/' + product.image_3))
+        except Exception as e:
+            print(e)
+        db.session.delete(product)
+        db.session.commit()
+        flash(f'The product {product.name} was deleted form your record', 'success')
+        return redirect(url_for('admin'))
+    flash(f'Cant delete the product', 'danger')
+    return redirect(url_for('admin'))
