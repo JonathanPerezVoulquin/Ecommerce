@@ -10,6 +10,7 @@ import os
 def home():
     products = Addproduct.query.filter(Addproduct.stock > 0)
     return render_template('products/index.html', products=products)
+    
 
 
 # BRAND
