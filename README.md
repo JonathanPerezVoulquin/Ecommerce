@@ -12,6 +12,10 @@
 ![03(admin)](https://user-images.githubusercontent.com/76247835/132421975-32d3ae5f-30ef-4d86-b50b-49871312624c.png)
 
 
+#**Addproducts(create)**
+![07(AddProduct)](https://user-images.githubusercontent.com/76247835/132422253-4b784fbb-eb57-41dd-948a-af8cdd605452.png)
+
+
 #**Brands (Delete, Create, Edit)**
 ![05(brands-delete)](https://user-images.githubusercontent.com/76247835/132422310-cae25f5e-8475-4b15-a06f-e2d855ce8d1c.png)
 
