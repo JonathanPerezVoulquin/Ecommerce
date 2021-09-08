@@ -8,7 +8,8 @@ import os
 
 @app.route('/')
 def home():
-    return "Items"
+    products = Addproduct.query.filter(Addproduct.stock > 0)
+    return render_template('products/index.html', products=products)
 
 
 # BRAND
