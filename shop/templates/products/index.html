@@ -11,26 +11,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{{url_for('home')}}">Productos</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              Marcas
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              {% for brand in brands%}
+              <a class="dropdown-item" href="{{url_for('get_brand', id= brand.id)}}">{{brand.name}}</a>
+              {% endfor %}
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Categorías</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </nav>
@@ -38,13 +37,37 @@
 <!--END NAVBAR--->
 <div class="container">
     <div class="row">
+        {%if brand %}
+        {% for b in brand %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{url_for('static', filename='images/' + b.image_1)}}" alt="{{b.name}}" class="card-img-top" height="200">
+                <div class="card-body">
+                    {% if b.discount > 0%}
+                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Descuento {{b.discount}}%</h5>
+                    {% endif %}
+                    <h5 class="text-center"> {{b.name}}</h5>
+                    <p class="text-center">Precio ${{b.price}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% else %}
+
+
         {% for product in products %}
         <div class="col-md-3 mt-3">
             <div class="card">
                 <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}" class="card-img-top" height="200">
                 <div class="card-body">
                     {% if product.discount > 0%}
-                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Discount {{product.discount}}%</h5>
+                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Descuento {{product.discount}}%</h5>
                     {% endif %}
                     <h5 class="text-center"> {{product.name}}</h5>
                     <p class="text-center">Precio ${{product.price}}</p>
@@ -57,6 +80,7 @@
 
         </div>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -9,9 +9,14 @@ import os
 @app.route('/')
 def home():
     products = Addproduct.query.filter(Addproduct.stock > 0)
-    return render_template('products/index.html', products=products)
-    
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    return render_template('products/index.html', products=products, brands=brands)
 
+@app.route('/brand/<int:id>')
+def get_brand(id):
+    brand = Addproduct.query.filter_by(brand_id=id)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    return render_template('products/index.html', brand=brand, brands=brands)
 
 # BRAND
 @app.route('/addbrand', methods=['GET', 'POST'])
