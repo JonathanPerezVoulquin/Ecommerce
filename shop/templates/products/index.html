@@ -54,7 +54,7 @@
                     <img src="{{url_for('static', filename='images/' + b.image_1)}}" alt="{{b.name}}" class="card-img-top" height="200">
                     <div class="card-body">
                         {% if b.discount > 0%}
-                            <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Descuento {{b.discount}}%</h5>
+                            <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> OFF {{b.discount}}%</h5>
                         {% endif %}
                         <h5 class="text-center"> {{b.name}}</h5>
                         <p class="text-center">Precio ${{b.price}}</p>
@@ -75,7 +75,7 @@
                     <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" alt="{{get_cat.name}}" class="card-img-top" height="200">
                     <div class="card-body">
                         {% if get_cat.discount > 0%}
-                            <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Descuento {{get_cat.discount}}%</h5>
+                            <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> OFF {{get_cat.discount}}%</h5>
                         {% endif %}
                         <h5 class="text-center"> {{get_cat.name}}</h5>
                         <p class="text-center">Precio ${{get_cat.price}}</p>
@@ -99,7 +99,7 @@
                 <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}" class="card-img-top" height="200">
                 <div class="card-body">
                     {% if product.discount > 0%}
-                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> Descuento {{product.discount}}%</h5>
+                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> OFF {{product.discount}}%</h5>
                     {% endif %}
                     <h5 class="text-center"> {{product.name}}</h5>
                     <p class="text-center">Precio ${{product.price}}</p>
