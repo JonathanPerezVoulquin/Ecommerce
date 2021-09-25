@@ -61,8 +61,8 @@
                         <p class="text-center">Precio ${{b.price}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="" class="float-left btn btn-sm btn-primary">Details</a>
-                        <a href="" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
+                        <a href="{{url_for('single_page', id=b.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
+                        <a href="#" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                         <p class="text-center">Precio ${{get_cat.price}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="" class="float-left btn btn-sm btn-primary">Details</a>
+                        <a href="{{url_for('single_page', id=get_cat.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
                         <a href="" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
                     </div>
                 </div>
@@ -155,8 +155,8 @@
                     <p class="text-center">Precio ${{product.price}}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="" class="float-left btn btn-sm btn-primary">Details</a>
-                    <a href="" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
+                    <a href="{{url_for('single_page', id=product.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="#" class="float-rigth btn btn-sm btn-warning">Add to cart</a>
                 </div>
             </div>
 

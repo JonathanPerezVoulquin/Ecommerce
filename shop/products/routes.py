@@ -14,6 +14,13 @@ def home():
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
     return render_template('products/index.html', products=products, brands=brands, categories=categories)
 
+
+@app.route('/product/<int:id>')
+def single_page(id):
+    product = Addproduct.query.get_or_404(id)
+    return render_template('products/single_page.html', product=product)
+
+
 @app.route('/brand/<int:id>')
 def get_brand(id):
     page = request.args.get('page', 1, type=int)
