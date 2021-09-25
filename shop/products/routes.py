@@ -16,18 +16,24 @@ def home():
 
 @app.route('/brand/<int:id>')
 def get_brand(id):
-    brand = Addproduct.query.filter_by(brand_id=id)
+    page = request.args.get('page', 1, type=int)
+    #This query is required to get the ID in the template
+    get_b = Brand.query.filter_by(id=id).first_or_404()
+    brand = Addproduct.query.filter_by(brand=get_b).paginate(page=page, per_page=8)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('products/index.html', brand=brand, brands=brands, categories=categories)
+    return render_template('products/index.html', brand=brand, brands=brands, categories=categories, get_b=get_b)
 
 
 @app.route('/categories/<int:id>')
 def get_category(id):
-    get_cat_prod = Addproduct.query.filter_by(category_id=id)
+    page = request.args.get('page', 1, type=int)
+    #This query is required to get the ID in the template
+    get_cat = Category.query.filter_by(id=id).first_or_404()
+    get_cat_prod = Addproduct.query.filter_by(category=get_cat).paginate(page=page, per_page=8)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct,(Category.id == Addproduct.category_id)).all()
-    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands)
+    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands, get_cat=get_cat)
 
 
 # BRAND

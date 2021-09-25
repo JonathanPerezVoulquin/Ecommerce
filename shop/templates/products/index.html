@@ -49,7 +49,7 @@
     <div class="row">
 
         {%if brand %}
-        {% for b in brand %}
+        {% for b in brand.items %}
             <div class="col-md-3 mt-3">
                 <div class="card">
                     <img src="{{url_for('static', filename='images/' + b.image_1)}}" alt="{{b.name}}" class="card-img-top" height="200">
@@ -70,11 +70,34 @@
         {% endfor %}
     </div>
 
+     <!-- pagination for brands(row)-->
+     <div class="row">
+        <div class="col text-center">
+            {% if brand.has_prev%}
+             <a href="{{url_for('get_brand', id=get_b.id, page=page_num)}}" class="btn btn-info btn-sm mt-3">Previus</a>
+            {% endif %}
+            {% for page_num in brand.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2)%}   <!--.iter_page(): By default it is empty and all the pages are shown, in this way we mark the ones we want to show
+-->
+            {% if page_num %}
+            {% if brand.page == page_num %}
+            <a href="{{url_for('get_brand', id=get_b.id, page=page_num)}}" class="btn btn-info btn-sm mt-3">{{page_num}}</a>
+            {% else %}
+            <a href="{{url_for('get_brand', id=get_b.id, page=page_num)}}" class="btn btn-outline-info btn-sm mt-3">{{page_num}}</a>
+            {% endif%}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% if brand.has_next%}
+             <a href="{{url_for('get_brand', id=get_b.id, page=get_cat_prod.next_num)}}" class="btn btn-info btn-sm mt-3">Next</a>
+            {% endif %}
+
+        </div>
+    </div>
 
     <div class="row">
-
         {% elif get_cat_prod %}
-        {% for get_cat in get_cat_prod %}
+        {% for get_cat in get_cat_prod.items %}
             <div class="col-md-3 mt-3">
                 <div class="card">
                     <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" alt="{{get_cat.name}}" class="card-img-top" height="200">
@@ -92,8 +115,30 @@
                 </div>
 
             </div>
-
         {% endfor %}
+    </div>
+    <!-- pagination for categories(row)-->
+     <div class="row">
+        <div class="col text-center">
+            {% if get_cat_prod.has_prev%}
+             <a href="{{url_for('get_category', id=get_cat.id, page=page_num)}}" class="btn btn-info btn-sm mt-3">Previus</a>
+            {% endif %}
+            {% for page_num in get_cat_prod.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2)%}
+            {% if page_num %}
+            {% if get_cat_prod.page == page_num %}
+            <a href="{{url_for('get_category', id=get_cat.id, page=page_num)}}" class="btn btn-info btn-sm mt-3">{{page_num}}</a>
+            {% else %}
+            <a href="{{url_for('get_category', id=get_cat.id, page=page_num)}}" class="btn btn-outline-info btn-sm mt-3">{{page_num}}</a>
+            {% endif%}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% if get_cat_prod.has_next%}
+             <a href="{{url_for('get_category', id=get_cat.id, page=get_cat_prod.next_num)}}" class="btn btn-info btn-sm mt-3">Next</a>
+            {% endif %}
+
+        </div>
     </div>
 
     <div class="row">
@@ -118,29 +163,30 @@
         </div>
                 {% endfor %}
    </div>
+        <!-- pagination for products(row)-->
 
    <div class="row">
-    <div class="col text-center">
-        {% if products.has_prev%}
-         <a href="{{url_for('home', page=page_num)}}" class="btn btn-info btn-sm mt-3">Previus</a>
-        {% endif %}
-        {% for page_num in products.iter_pages()%}
-        {% if page_num %}
-        {% if products.page == page_num %}
-        <a href="{{url_for('home', page=page_num)}}" class="btn btn-info btn-sm mt-3">{{page_num}}</a>
-        {% else %}
-        <a href="{{url_for('home', page=page_num)}}" class="btn btn-outline-info btn-sm mt-3">{{page_num}}</a>
-        {% endif%}
-        {% else %}
-        ...
-        {% endif %}
-        {% endfor %}
-        {% if products.has_next%}
-         <a href="{{url_for('home', page=products.next_num)}}" class="btn btn-info btn-sm mt-3">Next</a>
-        {% endif %}
+        <div class="col text-center">
+            {% if products.has_prev%}
+             <a href="{{url_for('home', page=page_num)}}" class="btn btn-info btn-sm mt-3">Previus</a>
+            {% endif %}
+            {% for page_num in products.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2)%}
+            {% if page_num %}
+            {% if products.page == page_num %}
+            <a href="{{url_for('home', page=page_num)}}" class="btn btn-info btn-sm mt-3">{{page_num}}</a>
+            {% else %}
+            <a href="{{url_for('home', page=page_num)}}" class="btn btn-outline-info btn-sm mt-3">{{page_num}}</a>
+            {% endif%}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% if products.has_next%}
+             <a href="{{url_for('home', page=products.next_num)}}" class="btn btn-info btn-sm mt-3">Next</a>
+            {% endif %}
 
+        </div>
     </div>
-</div>
 </div>
 {% endif%}
 {% endblock %}
