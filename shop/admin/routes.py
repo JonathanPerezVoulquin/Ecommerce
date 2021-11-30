@@ -31,6 +31,7 @@ def category():
     categories = Category.query.order_by(Category.id.desc()).all()
     return render_template('admin/brand.html', title='Category page', categories=categories)
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)

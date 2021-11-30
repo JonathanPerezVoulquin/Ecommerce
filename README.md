@@ -1,4 +1,17 @@
-# Ecommerce
+FIRST:
+
+In flask_uploads.py (library)
+
+Change:
+from werkzeug import secure_filename,FileStorage
+
+to:
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Ecommerce(Python version: Python 3.9.0)
 
 # **Register  to enter the admin part** 
 ![02(register)](https://user-images.githubusercontent.com/76247835/132421675-630359dd-9869-4726-90e2-b80bcf6ed285.png)
