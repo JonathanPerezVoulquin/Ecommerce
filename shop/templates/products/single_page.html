@@ -35,6 +35,10 @@
             </div>
           </li>
 
+          <li class="nav-item">
+            <a href="" class="nav-link" tabindex="-1">Cart ({{session['Shoppingcart']|length}})</a>
+          </li>
+
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
@@ -53,13 +57,30 @@
         </div>
 
         <div class="col-md-6">
-            <h4> Product name: {{ product.name }}</h4>
-            <p> Product Price: ${{ product.price }}</p>
+            <h4> {{ product.name }}</h4>
+            <p> Price: ${{ product.price }}</p>
             {% if product.discount > 0%}
             <p> Discount: {{ product.discount}} %</p>
             {% endif %}
             <b>Product Discription</b>
             <p> {{ product.desc }}</p>
+            <form action="{{url_for('addCart')}}" method="post">
+              <input type="hidden" name="product_id" value="{{product.id}}">
+              <button type="submit" class="btn btn-sm btn-warning">Add cart</button>
+              <label for="">Quantity:</label>
+              <input type="number" name="quantity" id="" value="1" min="1" max="{{product.stock}}">
+              {% set colors = product.colors.split(',') %}
+              <label for="colors">Colors:</label>
+              <select name="colors" id="" >
+                {% for color in colors %}
+                {% set col = color.split(':') %}
+                <option value="{{col[0]}}">{{col[0]}}</option>
+                
+                {% endfor %}
+              </select>
+
+            </form>
+            
 
         </div>
     </div>
