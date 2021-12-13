@@ -1,0 +1,49 @@
+{% extends 'layout.html'%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <table class="table table-sm table-striped">
+            <thead>
+                <th>Sr</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Prince</th>
+                <th>Quantity</th>
+                <th>Discount</th>
+                <th>Subtotal</th>
+                <th>Update</th>
+                <th>Remove</th>
+            </thead>
+            <tbody>
+                {% for key, product in session['Shoppingcart'].items() %}
+                <!--formula to apply the discount-->
+                {% set discount = '%0.2f'|format((product.discount/100)* product.price|float)%}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.color}}</td>
+                    <td>$ {{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                    {% if product.discount > 0 %}
+                    <td>{{product.discount}} % is ${{discount}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    <!--set and formula for to apply the price discount-->
+                    {% set Subtotal = product.quantity|int * product.price %}
+                    <td>$ {{'%0.2f'|format((Subtotal|float)- discount|float)}}</td>
+                    <td><a href="#">Update</a></td>
+                    <td><a href="#">Remove</a></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><a href=""></a></td>
+                    <td><a href="/">Continue shopping</a></td>
+                    <td colspan="3"><h3>Iva : ${{iva}} (21% IVA)</a></h3></td>
+                    <td colspan="4"><h3>Total: ${{total}}</h3></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

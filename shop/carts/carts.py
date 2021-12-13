@@ -35,3 +35,20 @@ def addCart():
         print(e)
     finally:
         return redirect(request.referrer)
+
+
+@app.route('/carts')
+def getCart():
+    if 'Shoppingcart' not in session:
+        return redirect(request.referrer)
+    subtotal = 0
+    total = 0
+    for k, product in session ['Shoppingcart'].items():
+        discount = (product['discount']/100) * float(product['price'])
+        subtotal += float(product['price']) * int(product['quantity'])
+        subtotal -= discount
+        iva = ('%.2f' % (.21*float(subtotal)))
+        # tax = iva in Argentina, with a value of 21%
+        total = float('%.2f' % (1.21 * subtotal))
+
+    return render_template('products/carts.html', iva = iva, total = total)
