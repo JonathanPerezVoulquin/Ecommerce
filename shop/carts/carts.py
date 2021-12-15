@@ -16,6 +16,7 @@ def addCart():
         quantity = request.form.get('quantity')
         colors = request.form.get('colors')
         product = Addproduct.query.filter_by(id=product_id).first()
+           
         if product_id and quantity and colors and request.method == 'POST':
             dictItems = {product_id:{'name': product.name, 'price': product.price, 'discount': product.discount,
             'color':colors, 'quantity': quantity, 'image': product.image_1, 'colors': product.colors}}
@@ -60,7 +61,6 @@ def empty_cart():
         return redirect(url_for('home'))
     except Exception as e:
         print(e)
-
 
 @app.route('/updatecart/<int:code>', methods=['POST'])
 def updatecart(code):

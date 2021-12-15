@@ -43,7 +43,7 @@
                             <td>$ {{product.price}}</td>
                             
                             <td>
-                                <input type="number" name="quantity" value="{{product.quantity}}" min="1" max="{{product.stock}}" id="">
+                                <input type="number" name="quantity" value="{{product.quantity}}"  min ="1" max="{{product.stock}}">
                                                            
                             </td>
 
@@ -54,8 +54,8 @@
                             <td></td>
                             {% endif %}
                             <!--set and formula for to apply the price discount-->
-                            {% set Subtotal = product.quantity|int * product.price %}
-                            <td>$ {{'%0.2f'|format((Subtotal|float)- discount|float)}}</td>
+                            {% set Subtotal = product.quantity|int * product.price|float %}
+                            <td>$ {{'%0.2f'|format((Subtotal|float) - discount|float)}}</td>
                             <td><button class="btn btn-sm btn-info">Update</button></td>
                             
                         </form>
