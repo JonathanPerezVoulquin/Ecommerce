@@ -1,3 +1,19 @@
+FIRST:
+
+In flask_uploads.py (library)
+
+Change:
+
+from werkzeug import secure_filename,FileStorage
+
+
+to:
+
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
+
+
+
 # Ecommerce
 
 # **Register  to enter the admin part** 
