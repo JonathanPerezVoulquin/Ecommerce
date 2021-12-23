@@ -37,12 +37,11 @@
             <a href="{{url_for('getCart')}}" class="nav-link" tabindex="-1"><img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 30px; width: 30px;" alt="Carrito-De-Compras"> ({{session['Shoppingcart']|length}})</a>
           </li>
 
-        </ul>
-
-        <form class="form-inline my-2 my-lg-0">
-             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-             <button class="btn btn-outline-success my-2 my-sm-0 f" type="submit">Search</button>
-        </form>
+        </ul>       
+          <form class="form-inline my-2 my-lg-0">
+               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+               <button class="btn btn-outline-success my-2 my-sm-0 f" type="submit">Search</button>
+          </form>        
       </div>
     </nav>
 </div>
