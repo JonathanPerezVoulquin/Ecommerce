@@ -63,9 +63,8 @@
                             <td><button class="btn btn-sm btn-info">Update</button></td>
                             
                         </form>
-                        <td><button class="btn btn-sm btn-danger">Remove</button></td>
-                    </tr>
-                    
+                        <td><a href="{{url_for('deleteItem', id=key)}}" class="btn btn-sm btn-danger">Remove</a href="{{url_for('deleteItem', id=key)}}"></td>
+                    </tr>                                        
                     {% endfor %}
                     
 
@@ -83,5 +82,9 @@
         </div>
     </div>
  </div>
+
+ <div class="text-center">
+     <button type="submit"class="btn btn-sm btn-warning">CLEAR CART</button>
+</div>
 
 {% endblock %}

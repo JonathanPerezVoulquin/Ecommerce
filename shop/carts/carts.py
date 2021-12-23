@@ -39,10 +39,10 @@ def addCart():
         return redirect(request.referrer)
      
 
-@app.route('/carts/', methods=['GET'])
+@app.route('/carts/')
 def getCart():
-    if 'Shoppingcart' not in session:
-        return redirect(request.referrer)
+    if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
+        return redirect(url_for('home'))
     subtotal = 0
     total = 0
     
@@ -84,6 +84,22 @@ def updatecart(code):
         except Exception as e:
             print(e)
             return redirect(url_for('getCard'))
+
+
+@app.route('/deleteitem/<int:id>')
+def deleteItem(id):
+    if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
+        return redirect(url_for('home'))
+    try:
+        session.modified = True 
+        for key, item in session['Shoppingcart'].items():
+            if int(key) == id:
+                session['Shoppingcart'].pop(key,None)
+                return redirect(url_for('getCart'))
+        return redirect(url_for('getCart'))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('getCart'))
 
 
 @app.route('/empty')
