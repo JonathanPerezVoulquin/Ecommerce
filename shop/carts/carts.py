@@ -1,7 +1,7 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from shop import db, app
 from shop.products.models import Addproduct
-
+from shop.products.routes import brands, categories
 def MagerDicts(dict1, dict2):
     if isinstance(dict1,list) and isinstance(dict2,list):
         return dict1 + dict2
@@ -54,7 +54,7 @@ def getCart():
         # tax = iva in Argentina, with a value of 21%
         total = float('%.2f' % (1.21 * subtotal))
         
-    return render_template('products/carts.html', iva = iva, total = total, subtotal=subtotal)
+    return render_template('products/carts.html', iva = iva, total = total, subtotal=subtotal, brands=brands(), categories=categories())
 
 """
 query to access each product
