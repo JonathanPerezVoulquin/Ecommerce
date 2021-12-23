@@ -1,6 +1,8 @@
 {% extends 'layout.html'%}
 {% block content %}
 {% include 'navbar.html'%}
+
+    
 <div class="container mt-4">
     {% include '_messages.html'%}
 
@@ -23,6 +25,7 @@
                     {% for key, product in session['Shoppingcart'].items() %}
                     <!--formula to apply the discount-->
                     {% set discount = '%0.2f'|format((product.discount/100)* product.price|float)%}
+
                     <tr>
                         <td>{{loop.index}}</td>
                         <td><img src="{{url_for('static', filename='images/' + product.image)}}" alt="{{product.name}}" width="50" height="50"></td>
@@ -34,7 +37,7 @@
                                 <select name="colors" id="" >
                                     <option value="{{product.color}}" style="display:none;:">{{product.color|capitalize}}</option>
                                   {% for color in colors %}
-                                  {% set col = color.split(':') %}
+                                  {% set col = color.split(':')%}
                                   <option value="{{col[0]}}">{{col[0]}}</option>
                                   
                                   {% endfor %}
@@ -43,11 +46,12 @@
                             <td>$ {{product.price}}</td>
                             
                             <td>
-                                <input type="number" name="quantity" value="{{product.quantity}}"  min ="1" max="{{product.stock}}">
+                                <!--IMPORTANTE-->
+                                <!--acá tendría que resolver como hacer que el máximo sea el total del stock-->
+                                <input type="number" name="quantity" value="{{product.quantity}}"  min ="1" max="{{product.stock}}">   
                                                            
                             </td>
-
-                            
+                                                      
                             {% if product.discount > 0 %}
                             <td>{{product.discount}} % is ${{discount}}</td>
                             {% else %}
@@ -61,8 +65,10 @@
                         </form>
                         <td><button class="btn btn-sm btn-danger">Remove</button></td>
                     </tr>
+                    
                     {% endfor %}
-                  
+                    
+
                 </tbody>
                 <tfooter>
                     <tr class="">
@@ -76,6 +82,6 @@
             </table>
         </div>
     </div>
+ </div>
 
-        </div>
 {% endblock %}

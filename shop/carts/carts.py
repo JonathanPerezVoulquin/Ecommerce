@@ -9,17 +9,18 @@ def MagerDicts(dict1, dict2):
         return dict(list(dict1.items()) + list(dict2.items()))
     return False
 
+
+
 @app.route('/addcart', methods=['POST'])
 def addCart():
     try:
         product_id = request.form.get('product_id')
         quantity = request.form.get('quantity')
-        colors = request.form.get('colors')
+        colors = request.form.get('colors')       
         product = Addproduct.query.filter_by(id=product_id).first()
-           
         if product_id and quantity and colors and request.method == 'POST':
             dictItems = {product_id:{'name': product.name, 'price': product.price, 'discount': product.discount,
-            'color':colors, 'quantity': quantity, 'image': product.image_1, 'colors': product.colors}}
+            'color':colors, 'quantity': quantity, 'image': product.image_1, 'colors': product.colors, 'stock':product.stock}}
             #add another item to the list
             if 'Shoppingcart' in session:
                 print(session['Shoppingcart'])
@@ -36,14 +37,15 @@ def addCart():
         print(e)
     finally:
         return redirect(request.referrer)
+     
 
-
-@app.route('/carts')
+@app.route('/carts/', methods=['GET'])
 def getCart():
     if 'Shoppingcart' not in session:
         return redirect(request.referrer)
     subtotal = 0
     total = 0
+    
     for k, product in session ['Shoppingcart'].items():
         discount = (product['discount']/100) * float(product['price'])
         subtotal += float(product['price']) * int(product['quantity'])
@@ -51,16 +53,18 @@ def getCart():
         iva = ('%.2f' % (.21*float(subtotal)))
         # tax = iva in Argentina, with a value of 21%
         total = float('%.2f' % (1.21 * subtotal))
-
+        
     return render_template('products/carts.html', iva = iva, total = total, subtotal=subtotal)
 
-@app.route('/empty')
-def empty_cart():
-    try:
-        session.clear()
-        return redirect(url_for('home'))
-    except Exception as e:
-        print(e)
+"""
+query to access each product
+
+@app.route('/carts/<int:id>')
+def queryStock(id):
+    stock = Addproduct.query.get_or_404(id)
+    return render_template('products/carts.html', stock=stock)
+"""
+
 
 @app.route('/updatecart/<int:code>', methods=['POST'])
 def updatecart(code):
@@ -80,3 +84,12 @@ def updatecart(code):
         except Exception as e:
             print(e)
             return redirect(url_for('getCard'))
+
+
+@app.route('/empty')
+def empty_cart():
+    try:
+        session.clear()
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
