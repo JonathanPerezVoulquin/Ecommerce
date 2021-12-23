@@ -25,6 +25,11 @@ def addCart():
             if 'Shoppingcart' in session:
                 print(session['Shoppingcart'])
                 if product_id in session['Shoppingcart']:
+                    #for aumented quantity items
+                    for key, item in session['Shoppingcart'].items():
+                        if int(key) == int(product_id):
+                            session.modified = True
+                            item['quantity'] += 1
                     print('This product in already in your cart')
                 else:
                     session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], dictItems)
