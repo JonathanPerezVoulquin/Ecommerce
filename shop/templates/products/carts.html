@@ -48,6 +48,7 @@
                             <td>
                                 <!--IMPORTANTE-->
                                 <!--acá tendría que resolver como hacer que el máximo sea el total del stock-->
+                                <!--LO HICE agregando al dictItem -> 'stock': product.stock -->
                                 <input type="number" name="quantity" value="{{product.quantity}}"  min ="1" max="{{product.stock}}">   
                                                            
                             </td>
@@ -84,7 +85,7 @@
  </div>
 
  <div class="text-center">
-     <a href="{{url_for('empty_cart')}}" type="submit"class="btn btn-sm btn-warning">CLEAR CART</a>
+     <a href="{{url_for('empty_cart')}}"  type="submit"class="btn btn-sm btn-warning">CLEAR <img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 20px; width: 20px;" alt="Carrito-De-Compras"></a>
 </div>
 
 {% endblock %}

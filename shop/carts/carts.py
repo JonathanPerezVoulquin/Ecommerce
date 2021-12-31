@@ -15,7 +15,7 @@ def MagerDicts(dict1, dict2):
 def addCart():
     try:
         product_id = request.form.get('product_id')
-        quantity = request.form.get('quantity')
+        quantity = int(request.form.get('quantity'))
         colors = request.form.get('colors')       
         product = Addproduct.query.filter_by(id=product_id).first()
         if product_id and quantity and colors and request.method == 'POST':
@@ -30,6 +30,8 @@ def addCart():
                         if int(key) == int(product_id):
                             session.modified = True
                             item['quantity'] += 1
+                            if item['stock'] <= 0:
+                                flash('No stock product')            
                     print('This product in already in your cart')
                 else:
                     session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], dictItems)

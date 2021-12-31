@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include 'navbar.html '%}
+
+<div class="container">
+    <div class="row">
+      
+        {% for product in products %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}" class="card-img-top" height="200">
+                <div class="card-body">
+                    {% if product.discount > 0%}
+                        <h5 style="text-shadow: 1px 1px 2px #000;color:#00bb2d; position:absolute; top:10%;"> OFF {{product.discount}}%</h5>
+                    {% endif %}
+                    <h5 class="text-center"> {{product.name}}</h5>
+                    <p class="text-center">Precio ${{product.price}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{url_for('single_page', id=product.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
+                     <!--Add Cart-->                   
+                    <form action="{{url_for('addCart')}}" method="post">
+                            <input type="hidden" name="product_id" value="{{product.id}}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add cart <img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 20px; width: 20px;"></button>
+    
+                            <input type="hidden" name="quantity" id="" value="1" min="1" max="{{product.stock}}">
+                            {% set colors = product.colors.split(',') %}
+    
+                            <select name="colors" id="colors" style="visibility: hidden;" >
+                              {% for color in colors %}
+                              {% set col = color.split(':') %}
+                              <option value="{{col[0]}}">{{col[0]}}</option>
+                              
+                              {% endfor %}
+                            </select>
+                    </form>
+                                  
+                </div>
+            </div>
+
+        </div>
+                {% endfor %}
+   </div>
+   <!--End cart products-->
+    
+</div>
+{% endblock %}

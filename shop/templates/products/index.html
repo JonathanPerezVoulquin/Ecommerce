@@ -22,8 +22,7 @@
                         <!--ADD TO CART IN BRANDS-->
                         <form action="{{url_for('addCart')}}" method="post">
                             <input type="hidden" name="product_id" value="{{b.id}}">
-                            <button type="submit" class="btn btn-sm btn-warning">Add cart <img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 30px; width: 30px;"></button>
-
+                            <button type="submit"  class="btn btn-sm btn-warning">Add cart <img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 30px; width: 30px;"></button>
                             <input type="hidden" name="quantity" id="" value="1">
                             {% set colors = b.colors.split(',') %}
 
@@ -34,7 +33,7 @@
                             
                             {% endfor %}
                             </select>
-                        </form>
+                        </form>                       
                     </div>
                 </div>
 
@@ -166,6 +165,7 @@
         </div>
                 {% endfor %}
    </div>
+   <!--End cart products-->
    
    <!-- pagination for products(row)-->
 
