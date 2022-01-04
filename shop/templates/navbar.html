@@ -33,17 +33,36 @@
               {% endfor %}
             </div>
           </li>
+
           <li class="nav-item">
             <a href="{{url_for('getCart')}}" class="nav-link" tabindex="-1"><img src="{{url_for('static', filename='images/carrito.png')}}" style="height: 30px; width: 30px;" alt="Carrito-De-Compras"> ({{session['Shoppingcart']|length}})</a>
           </li>
 
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a href="" class="nav-link">{{current_user.name}}</a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="{{url_for('customerLogout')}}" class="btn btn-danger">Logout</a>
+          </li>
+          {% else %}
+          
+          <li class="nav-item">
+            <a href="{{url_for('customerLogin')}}" class="btn btn-success">Login</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{url_for('customerRegister')}}" class="btn btn-secondary">Sign In</a>
+          </li>
+          {% endif %}
         </ul>       
-        <form class="form-inline my-2 my-lg-0 " action="{{url_for('result')}}">
-             <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-             <button class="btn btn-outline-success my-2 my-sm-0 f" type="submit">Search</button>
-        </form>        
       </div>
     </nav>
+    <form class="form-inline my-2 my-lg-0" action="{{url_for('result')}}">
+         <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+         <button class="btn btn-outline-success my-2 my-sm-0 f" type="submit">Search</button>
+    </form>        
 </div>
 <!--END NAVBAR--->
 {% endblock %}

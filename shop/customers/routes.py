@@ -6,7 +6,7 @@ from .models import Register
 
 
 @app.route('/customer/register', methods=['GET', 'POST'])
-def customer_register():
+def customerRegister():
     form = CustomerRegisterForm()
     if form.validate_on_submit():
         hash_password = bcrypt.generate_password_hash(form.password.data)
@@ -34,3 +34,8 @@ def customerLogin():
         return redirect(url_for('customerLogin'))
 
     return render_template('customer/login.html', form=form)
+
+@app.route('/customer/logout')
+def customerLogout():
+    logout_user()
+    return redirect(url_for('customerLogin'))

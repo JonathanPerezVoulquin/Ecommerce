@@ -34,3 +34,6 @@ class CustomerRegisterForm(FlaskForm):
 class CustomerLoginForm(FlaskForm):
     email = StringField('Email:', [validators.Email(), validators.DataRequired()])
     password= PasswordField('Password:',[validators.DataRequired()])
+
+    submit = SubmitField('Login')
+
