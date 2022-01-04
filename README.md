@@ -51,7 +51,7 @@ Linux: source env/bin/activate
 ![display-cart-items](https://user-images.githubusercontent.com/76247835/147867960-26518de3-6e51-4a7d-9153-4a5785c3f56f.png)
 
 
-# **Remove-Update-Clear **
+# **Remove-Update-Clear**
 
 ![remove-update-clean](https://user-images.githubusercontent.com/76247835/147867984-2d7868cf-4aa7-4ff3-9931-788a25c7f597.png)
 
@@ -71,12 +71,22 @@ Linux: source env/bin/activate
 ![pagination](https://user-images.githubusercontent.com/76247835/147868034-ee3cea50-62ec-44df-982c-1cf0ebab0d37.png)
 
 
-
 # **Serch-and-Result-Page**
 ![serch-and-result-page](https://user-images.githubusercontent.com/76247835/147868102-582abff0-2a47-44cc-9e0e-4a58701b3aad.png)
 
 
-
 # **Register-Customers**
 ![register-customer](https://user-images.githubusercontent.com/76247835/148026304-359cc5d4-0dae-4f33-9b26-cf50b181623b.png)
+
+
+# **Login-signIn**
+![Login-signIn](https://user-images.githubusercontent.com/76247835/148135195-a21e1a5f-3cd7-4ede-808d-0153e41a4808.png)
+
+
+# **Login-Customers**
+![Login-customers](https://user-images.githubusercontent.com/76247835/148135364-c378bfa0-100a-4cd6-8a80-9ce7de9bb717.png)
+
+
+# **Logout**
+![Logout](https://user-images.githubusercontent.com/76247835/148135448-e14c65ed-7dbf-40d0-ada8-e1f36f1f6355.png)
 
