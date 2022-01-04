@@ -1,6 +1,11 @@
 # FIRST Activate Virtual Environment
 Windows : c:\Ecommerce-master\env\scripts\activate
+
 Linux: source env/bin/activate
+
+# **Connection Database**
+![connection](https://user-images.githubusercontent.com/76247835/147994582-fdf2086c-b4ca-4e71-bb59-c94385cdf11a.png)
+
 
 
 # Ecommerce
