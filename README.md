@@ -7,7 +7,6 @@ Linux: source env/bin/activate
 ![connection](https://user-images.githubusercontent.com/76247835/147994582-fdf2086c-b4ca-4e71-bb59-c94385cdf11a.png)
 
 
-
 # Ecommerce
 
 # **Register  to enter the admin part** 
@@ -42,13 +41,9 @@ Linux: source env/bin/activate
 ![Details-product](https://user-images.githubusercontent.com/76247835/147867919-53ea7d6a-e0a7-4e28-b57b-4f25369691c1.png)
 
 
-
-
 # **Add-Cart**
 
 ![add-cart](https://user-images.githubusercontent.com/76247835/147867953-1ecf87b9-002c-4068-b98e-da430bfeb1e2.png)
-
-
 
 
 # **Display-Cart-Items**
@@ -56,13 +51,9 @@ Linux: source env/bin/activate
 ![display-cart-items](https://user-images.githubusercontent.com/76247835/147867960-26518de3-6e51-4a7d-9153-4a5785c3f56f.png)
 
 
-
-
 # **Remove-Update-Clear **
 
 ![remove-update-clean](https://user-images.githubusercontent.com/76247835/147867984-2d7868cf-4aa7-4ff3-9931-788a25c7f597.png)
-
-
 
 
 # **Filter-Brands**
@@ -70,13 +61,9 @@ Linux: source env/bin/activate
 ![filter-brands](https://user-images.githubusercontent.com/76247835/147868008-081a0643-7687-43f4-afb0-dbd3d2005534.png)
 
 
-
-
 # **Filter-Categories**
 
 ![filter-categories](https://user-images.githubusercontent.com/76247835/147868022-e456c59b-1202-45c8-b442-8a8fc8819a71.png)
-
-
 
 
 # **Pagination**
@@ -85,10 +72,11 @@ Linux: source env/bin/activate
 
 
 
-
 # **Serch-and-Result-Page**
-
 ![serch-and-result-page](https://user-images.githubusercontent.com/76247835/147868102-582abff0-2a47-44cc-9e0e-4a58701b3aad.png)
 
 
+
+# **Register-Customers**
+![register-customer](https://user-images.githubusercontent.com/76247835/148026304-359cc5d4-0dae-4f33-9b26-cf50b181623b.png)
 
