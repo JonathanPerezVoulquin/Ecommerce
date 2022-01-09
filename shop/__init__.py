@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_uploads import IMAGES, UploadSet, configure_uploads, patch_request_class
 from flask_msearch import Search
 from flask_login import LoginManager, login_manager
+from flask_migrate import Migrate
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -22,6 +23,9 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 search = Search()
 search.init_app(app)
+
+migrate = Migrate(app,db)
+migrate.init_app(app,db)
 
 
 login_manager = LoginManager()
