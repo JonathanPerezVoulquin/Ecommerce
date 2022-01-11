@@ -29,13 +29,13 @@ class Register(db.Model, UserMixin):
 class JsonEcodedDict(db.TypeDecorator):
     impl = db.Text
 
-    def set_value(self,value,dialect):
+    def process_bind_param(self,value,dialect):
         if value is None:
             return '{}'
         else:
             return json.dumps(value)
 
-    def get_value(self,value,dialect):
+    def process_result_param(self,value,dialect):
         if value is None:
             return '{}'
         else:
@@ -50,6 +50,7 @@ class CustomerOrder(db.Model):
     customer_id = db.Column(db.Integer, unique=False, nullable=False)
     date_create = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     orders = db.Column(JsonEcodedDict)
+   
 
     def __rpr__(self):
         return '<CustomerOrder %r>' % self.invoice
