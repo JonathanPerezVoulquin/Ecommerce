@@ -1,0 +1,90 @@
+{% extends 'layout.html'%}
+{% block content %}
+{% include 'navbar.html'%}
+
+    
+<div class="container mt-4">
+    {% include '_messages.html'%}
+
+    <div class="row">
+        <div class="col-md-12">
+            Invoice : {{orders.invoice}}
+            <br>
+            Status: {{orders.status}}
+            <br>
+            Customer name: {{customer.name}}
+            <br>
+            Customer email: {{customer.email}}
+            <br>
+            Customer contact: {{customer.contact}}
+        </div>
+        <div class="col-md-12">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <th>Sr</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Prince</th>
+                    <th>Quantity</th>
+                    <th>Discount</th>
+                    <th>Subtotal</th>
+                   
+
+                </thead>
+                <tbody>
+                    {% for key, product in orders.orders.items() %}
+                    <!--formula to apply the discount-->
+                    {% set discount = '%0.2f'|format((product.discount/100)* product.price|float)%}
+
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td><img src="{{url_for('static', filename='images/' + product.image)}}" alt="{{product.name}}" width="50" height="50"></td>
+                        <td>{{product.name}}</td>
+                        <form action="{{url_for('updatecart', code=key)}}" method="post">
+                            <td>
+                                {{product.color}}
+                            </td>
+                            <td>$ {{product.price}}</td>
+                            
+                            <td>
+                                <!--IMPORTANTE-->
+                                <!--acá tendría que resolver como hacer que el máximo sea el total del stock-->
+                                <!--LO HICE agregando al dictItem -> 'stock': product.stock -->
+                                {{product.quantity}}                        
+                            </td>
+                                                      
+                            {% if product.discount > 0 %}
+                            <td>{{product.discount}} % is ${{discount}}</td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                            <!--set and formula for to apply the price discount-->
+                            {% set Subtotal = product.quantity|int * product.price|float %}
+                            <td>$ {{'%0.2f'|format((Subtotal|float) - discount|float)}}</td>
+                            
+                        </form>
+                    </tr>                                        
+                    {% endfor %}
+                    
+
+                </tbody>
+                <tfooter>
+                    <tr class="">
+                        <td><a href=""></a></td>
+                        <td><a href="{{url_for('get_order')}}" class="btn btn-outline-success">Checkout</a></td>
+                        <td colspan="2"><h3>SUBTOTAL: ${{subtotal}}</h3></td>
+                        <td colspan="3"><h3>TAX ${{iva}} (21% IVA)</a></h3></td>
+                        <td colspan="4"><h3>TOTAL: ${{total}}</h3></td>
+                    </tr>                
+                </tfooter>
+            </table>
+        </div>
+    </div>
+ </div>
+
+ <div class="text-center">
+     <a href="#"  type="submit"class="btn btn-sm btn-info">Get PDF </a>
+</div>
+
+{% endblock %}
