@@ -1,5 +1,5 @@
 import os
-
+# from werkzeug.security import generate_password_hash, check_password_hash investigate the library for work with passwords. Replace flask_bcrypt
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt

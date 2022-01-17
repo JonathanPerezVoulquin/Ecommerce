@@ -74,7 +74,7 @@
                         <td><a href=""></a></td>
                         <td><a href="{{url_for('get_order')}}" class="btn btn-outline-success">Checkout</a></td>
                         <td colspan="2"><h3>SUBTOTAL: ${{subtotal}}</h3></td>
-                        <td colspan="3"><h3>TAX ${{iva}} (21% IVA)</a></h3></td>
+                        <td colspan="3"><h3>TAX ${{iva}} (21% IVA)</h3></td>
                         <td colspan="4"><h3>TOTAL: ${{total}}</h3></td>
                     </tr>                
                 </tfooter>
@@ -84,7 +84,7 @@
  </div>
 
  <div class="text-center">
-     <a href="#"  type="submit"class="btn btn-sm btn-info">Get PDF </a>
+     <form action="{{url_for('get_pdf', invoice=orders.invoice)}}" method="post"><button type="submit" class="btn btn-info">GET PDF</button></form>
 </div>
 
 {% endblock %}

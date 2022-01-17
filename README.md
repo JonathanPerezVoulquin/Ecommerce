@@ -90,3 +90,10 @@ Linux: source env/bin/activate
 # **Logout**
 ![Logout](https://user-images.githubusercontent.com/76247835/148135448-e14c65ed-7dbf-40d0-ada8-e1f36f1f6355.png)
 
+
+# **Display-customer-order**
+![display-customer-order](https://user-images.githubusercontent.com/76247835/148893061-cda4f886-4650-49e5-af02-b28bf4a4d076.png)
+
+
+# **Get-PDF**
+![pdf-customer](https://user-images.githubusercontent.com/76247835/149486339-a9531ebd-23aa-45e3-a8da-5aef572a55aa.png)

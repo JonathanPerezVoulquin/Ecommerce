@@ -20,6 +20,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 Mako==1.1.6
 MarkupSafe==2.0.1
+pdfkit==1.0.0
 pycparser==2.21
 six==1.16.0
 SQLAlchemy==1.4.12

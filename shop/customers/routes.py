@@ -1,10 +1,10 @@
-import secrets
-
-from flask import redirect, render_template, url_for, request, flash, current_app, session
+from flask import redirect, render_template, url_for, request, flash, current_app, session, make_response
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt, login_manager
 from .forms import CustomerLoginForm, CustomerRegisterForm
 from .models import Register, CustomerOrder
+import secrets
+import pdfkit
 
 
 @app.route('/customer/register', methods=['GET', 'POST'])
@@ -51,10 +51,10 @@ def get_order():
         invoice = secrets.token_hex(5)
         try:
             order_1 = CustomerOrder(invoice=invoice, customer_id=customer_id, orders=session['Shoppingcart'])
-            db.session.add(order_1)
+            db.session.add(order_1)            
             db.session.commit()
             session.pop('Shoppingcart')
-            flash('Your order has been sent successfully', 'success')
+            flash('Your order has been sent successfully', 'success')            
             return redirect(url_for('orders', invoice=invoice))
         except Exception as e:
             print(e)
@@ -80,4 +80,33 @@ def orders(invoice):
             total = (float("%.2f" % (1.21 * subTotal)))
     else:
         return redirect(url_for('customerLogin'))
-    return render_template('customer/order.html', invoice=invoice, iva=iva, subTotal=subTotal, total=total, customer=customer, orders=orders )       
+    return render_template('customer/order.html', invoice=invoice, iva=iva, subTotal=subTotal, total=total, customer=customer, orders=orders )
+
+
+
+@app.route('/get_pdf/<invoice>', methods=['POST'])
+@login_required
+def get_pdf(invoice):
+    if current_user.is_authenticated:
+        total = 0
+        subTotal = 0
+        customer_id = current_user.id
+        if request.method == "POST":            
+            customer = Register.query.filter_by(id=customer_id).first()
+            orders = CustomerOrder.query.filter_by(customer_id=customer_id).order_by(CustomerOrder.id.desc()).first()
+            
+            for _key, product in orders.orders.items():
+                discount = (product['discount']/100) * float(product['price'])
+                subTotal += float(product['price'] * int(product['quantity']))
+                subTotal -= discount
+                iva = ('%.2f' % (.21 * float(subTotal)))
+                total = (float("%.2f" % (1.21 * subTotal)))
+
+            rendered = render_template('customer/pdf.html', customer=customer,invoice=invoice,orders=orders, iva=iva, total=total)
+            config = pdfkit.configuration(wkhtmltopdf=b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe')
+            pdf= pdfkit.from_string(rendered,configuration=config)
+            response = make_response(pdf)
+            response.headers['content-Type']= 'application/pdf'
+            response.headers['content-Disposition'] = 'inline: file=' + invoice + '.pdf' 
+            return response
+    return redirect(url_for('orders'))
