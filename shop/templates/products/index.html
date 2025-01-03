@@ -160,21 +160,24 @@
                               {% endfor %}
                             </select>
                     </form>
-                                  
-                </div>
-            </div>
-        <!-- Mostrar mensaje flash solo si el product_id es el mismo que el del producto actual -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
+                            <!-- Mostrar mensaje flash solo si el product_id es el mismo que el del producto actual -->
+        {% with messages = get_flashed_messages() %}
             {% if messages %}
-                {% for category, message in messages %}
-                    {% if category == 'warning' and request.args.get('product_id') == product.id|string %}
+                {% for message in messages %}
+                    {% if request.args.get('product_id') %}
+                        <!-- Si el product_id está presente en la URL, mostramos el mensaje solo para ese producto -->
                         <div class="alert alert-warning">{{ message }}</div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
+                                  
+                </div>
+            </div>
+        
         </div>
+
+
                 {% endfor %}
    </div>
    <!--End cart products-->
