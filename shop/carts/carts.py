@@ -2,14 +2,13 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 from shop import db, app
 from shop.products.models import Addproduct
 from shop.products.routes import brands, categories
+
 def MagerDicts(dict1, dict2):
-    if isinstance(dict1,list) and isinstance(dict2,list):
+    if isinstance(dict1, list) and isinstance(dict2, list):
         return dict1 + dict2
     elif isinstance(dict1, dict) and isinstance(dict2, dict):
         return dict(list(dict1.items()) + list(dict2.items()))
     return False
-
-
 
 @app.route('/addcart', methods=['POST'])
 def addCart():
@@ -18,96 +17,109 @@ def addCart():
         quantity = int(request.form.get('quantity'))
         colors = request.form.get('colors')       
         product = Addproduct.query.filter_by(id=product_id).first()
+        
         if product_id and quantity and colors and request.method == 'POST':
-            dictItems = {product_id:{'name': product.name, 'price': product.price, 'discount': product.discount,
-            'color':colors, 'quantity': quantity, 'image': product.image_1, 'colors': product.colors, 'stock':product.stock}}
-            #add another item to the list
+            # Check if requested quantity exceeds stock
+            if quantity > product.stock: 
+                flash('No stock')  # Show flash message if no stock
+                return redirect(request.referrer)  # Redirect back to the previous page
+            
+            dictItems = {product_id: {
+                'name': product.name, 
+                'price': product.price,
+                'discount': product.discount,
+                'color': colors, 
+                'quantity': quantity, 
+                'image': product.image_1, 
+                'colors': product.colors,
+                'stock': product.stock
+            }}
+
+            # Add another item to the list
             if 'Shoppingcart' in session:
                 print(session['Shoppingcart'])
                 if product_id in session['Shoppingcart']:
-                    #for aumented quantity items
+                    # For increased quantity items
                     for key, item in session['Shoppingcart'].items():
                         if int(key) == int(product_id):
                             session.modified = True
-                            item['quantity'] += 1
-                            if item['stock'] <= 0:
-                                flash('No stock product')            
-                    print('This product in already in your cart')
+                            new_quantity = item['quantity'] + quantity
+
+                            # Check if new quantity exceeds stock
+                            if new_quantity > item['stock']:
+                                flash(f'No hay suficiente stock para "{product.name}".', 'warning')
+                                return redirect(request.referrer)
+
+                            item['quantity'] = new_quantity
+                            print('Producto ya en el carrito, cantidad actualizada')
                 else:
+                    # Add the product to the cart if it is not there
                     session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], dictItems)
+                    print('Producto agregado al carrito')
                     return redirect(request.referrer)
             else:
+                # Create a new cart if it does not exist
                 session['Shoppingcart'] = dictItems
-                return redirect(request.referrer)         
+                print('Nuevo carrito creado')
+                return redirect(request.referrer)
 
     except Exception as e:
         print(e)
     finally:
         return redirect(request.referrer)
-     
 
 @app.route('/carts/')
 def getCart():
     if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
         return redirect(url_for('home'))
+    
     subtotal = 0
     total = 0
     
-    for k, product in session ['Shoppingcart'].items():
-        discount = (product['discount']/100) * float(product['price'])
+    for k, product in session['Shoppingcart'].items():
+        discount = (product['discount'] / 100) * float(product['price'])
         subtotal += float(product['price']) * int(product['quantity'])
         subtotal -= discount
-        iva = ('%.2f' % (.21*float(subtotal)))
-        # tax = iva in Argentina, with a value of 21%
+        iva = ('%.2f' % (.21 * float(subtotal)))  # Tax in Argentina (21%)
         total = float('%.2f' % (1.21 * subtotal))
         
-    return render_template('products/carts.html', iva = iva, total = total, subtotal=subtotal, brands=brands(), categories=categories())
-
-"""
-query to access each product
-
-@app.route('/carts/<int:id>')
-def queryStock(id):
-    stock = Addproduct.query.get_or_404(id)
-    return render_template('products/carts.html', stock=stock)
-"""
-
+    return render_template('products/carts.html', iva=iva, total=total, subtotal=subtotal, brands=brands(), categories=categories())
 
 @app.route('/updatecart/<int:code>', methods=['POST'])
 def updatecart(code):
-    if 'Shoppingcart' not in session and len(session['Shoppingcart']) <= 0:
+    if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
         return redirect(url_for('home'))
+    
     if request.method == 'POST':
         quantity = request.form.get('quantity')
         color = request.form.get('color')
         try:
             session.modified = True
-            for key, item in session ['Shoppingcart'].items():
+            for key, item in session['Shoppingcart'].items():
                 if int(key) == code:
                     item['quantity'] = quantity
                     item['color'] = color
-                    flash('Item is updated ')
-                    return redirect(url_for('getCart')) 
+                    flash('Item is updated')
+                    return redirect(url_for('getCart'))
         except Exception as e:
             print(e)
-            return redirect(url_for('getCard'))
-
+            return redirect(url_for('getCart'))
 
 @app.route('/deleteitem/<int:id>')
 def deleteItem(id):
     if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
         return redirect(url_for('home'))
+    
     try:
-        session.modified = True 
+        session.modified = True
         for key, item in session['Shoppingcart'].items():
             if int(key) == id:
-                session['Shoppingcart'].pop(key,None)
+                session['Shoppingcart'].pop(key, None)
                 return redirect(url_for('getCart'))
         return redirect(url_for('getCart'))
     except Exception as e:
         print(e)
         return redirect(url_for('getCart'))
-
 
 @app.route('/empty')
 def empty_cart():

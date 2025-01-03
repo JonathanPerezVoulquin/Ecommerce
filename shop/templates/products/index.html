@@ -149,6 +149,8 @@
     
                             <input type="hidden" name="quantity" id="" value="1" min="1" max="{{product.stock}}">
                             {% set colors = product.colors.split(',') %}
+
+                           
     
                             <select name="colors" id="colors" style="visibility: hidden;" >
                               {% for color in colors %}
@@ -161,6 +163,16 @@
                                   
                 </div>
             </div>
+        <!-- Mostrar mensaje flash solo si el product_id es el mismo que el del producto actual -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'warning' and request.args.get('product_id') == product.id|string %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
         </div>
                 {% endfor %}
